@@ -1,4 +1,3 @@
-# Code by Simon Monk https://github.com/simonmonk/
 
 from . import MFRC522
 import RPi.GPIO as GPIO
@@ -6,6 +5,8 @@ import RPi.GPIO as GPIO
 class SimpleMFRC522:
 
   READER = None
+
+  id_pool = []
   
   KEY = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
   BLOCK_ADDRS = [8, 9, 10]
@@ -87,4 +88,14 @@ class SimpleMFRC522:
       n = 0
       for i in range(0, 5):
           n = n * 256 + uid[i]
+      MFRC522().addToIdPool(n)
       return n
+
+  def addToIdPool(self,n):
+      if n not in id_pool:
+          id_pool.append(n)
+      print(id_pool)
+    
+
+
+
